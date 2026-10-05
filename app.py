@@ -1,10 +1,14 @@
+"""Aplicación Streamlit que muestra el pronóstico de pasajeros de aerolíneas con Prophet."""
+
 import streamlit as st
 import pandas as pd
 import pickle
 
+# Carga del modelo entrenado previamente con train_model.py.
 with open('prophet_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
+# --- Encabezado y descripción ---
 st.title("Proyección de Pasajeros de Aerolíneas")
 
 st.markdown(
@@ -20,16 +24,21 @@ st.markdown(
     """
 )
 
+# --- Controles del panel lateral ---
 meses = st.sidebar.slider("Selecciona la cantidad de meses a proyectar a futuro:", min_value=1, max_value=60, value=12)
 
 if st.sidebar.button("Pronosticar"):
+    # Fechas históricas + los meses futuros solicitados (frecuencia mensual, inicio de mes).
     futuro = model.make_future_dataframe(periods=meses, freq='MS')
     prediccion = model.predict(futuro)
-    
+
+    # Gráfica principal: datos históricos, pronóstico e intervalo de incertidumbre.
     fig = model.plot(prediccion)
     st.pyplot(fig)
+    # Gráfica de componentes: tendencia y estacionalidad anual.
     st.pyplot(model.plot_components(prediccion))
 
+    # Tabla con solo los meses proyectados, con columnas en español.
     with st.expander("Datos de la proyección"):
         st.dataframe(
             prediccion[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(meses).rename(
