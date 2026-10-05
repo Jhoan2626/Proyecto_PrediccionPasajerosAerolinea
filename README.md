@@ -1,2 +1,3 @@
-# Proyecto_PrediccionPasajerosAerolinea
-Modelo de series de tiempo con Prophet para pronosticar pasajeros aéreos mediante una aplicación en Streamlit.
+Proyección de Pasajeros de Aerolíneas - Modelo ProphetDescripción del ProyectoImplementación de un modelo de Data Analytics de series de tiempo utilizando Prophet. El proyecto pronostica el tráfico de pasajeros aéreos a partir del dataset histórico AirPassengers y muestra los resultados a través de una interfaz interactiva.   Archivos Principalestrain_model.py: Script para la preparación de los datos, el entrenamiento del algoritmo y la exportación del modelo.app.py: Aplicación web construida con Streamlit que permite seleccionar los meses a proyectar y visualizar los gráficos de resultados.   prophet_model.pkl: Archivo binario con el modelo previamente entrenado.Instrucciones de Ejecución LocalInstalar las dependencias necesarias:Bashpip install pandas prophet streamlit matplotlib
+Entrenar el modelo (solo si se necesita actualizar prophet_model.pkl):Bashpython train_model.py
+Ejecutar la aplicación web:Bashstreamlit run app.py
